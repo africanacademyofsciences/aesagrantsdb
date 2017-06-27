@@ -1,0 +1,49 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jun 27, 2017, 11:36:27 AM
+    Author     : kimaiga
+*/
+
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+
+
+*{
+    border: 0;
+    margin: 0;
+    padding: 0;
+    outline: 0;
+}
+
+html, body{
+    font-family: 'Raleway', serif;
+    font-size: 16px;
+    /*padding-top: 80px;*/
+    text-align: justify;
+}
+
+*{
+    font-family: "raleway", serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-transform: capitalize;
+    font-family: 'Raleway', serif;
+}
+
+/*container*/
+.container {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    font-family: 'Raleway', serif;
+}
