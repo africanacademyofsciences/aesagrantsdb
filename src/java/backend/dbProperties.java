@@ -8,7 +8,7 @@ public class dbProperties {
 	public static Connection getDBConnection() throws Exception{
 		Connection conn = null;
 		Class.forName("com.mysql.jdbc.Driver").newInstance();
-		conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/briclyn","root","303seminarian");
+		conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/grantsdb","root","303seminarian");
       return conn;
 	}
 	

@@ -6,13 +6,16 @@
 package backend;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.RequestDispatcher;
+import backend.dbProperties;
 
 /**
  *
@@ -21,77 +24,73 @@ import java.sql.*;
 @WebServlet(name = "SaveGrantee", urlPatterns = {"/SaveGrantee"})
 public class SaveGrantee extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, InstantiationException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
-//        try (PrintWriter out = response.getWriter()) {
-//            /* TODO output your page here. You may use following sample code. */
-//            out.println("<!DOCTYPE html>");
-//            out.println("<html>");
-//            out.println("<head>");
-//            out.println("<title>Servlet SaveGrantee</title>");            
-//            out.println("</head>");
-//            out.println("<body>");
-//            out.println("<h1>Servlet SaveGrantee at " + request.getContextPath() + "</h1>");
-//            out.println("</body>");
-//            out.println("</html>");
-//        }
+//<%@ page contentType="text/html; charset=iso-8859-1" language="java" import="java.sql.*" errorPage="" %>
+//<jsp:useBean id="dbConn" scope="request" class="com.villa.db.DBProperties"/>
+//<%
+		Connection conn=null;
+        try {
+            //    conn=dbConn.getConnection();
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SaveGrantee.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(SaveGrantee.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    conn = DriverManager.getConnection("jdbc:mysql://localhost/grantsdb","root","303seminarian");
+		
+		PreparedStatement psInsert=null;
+		
+		String sFullName=request.getParameter("grantee-name");
+		String sYear=request.getParameter("year");
+		String iIssue=request.getParameter("issue");
+		String iProgram=request.getParameter("programme");
+		String amount=request.getParameter("amount");
+		
+		
+		String sqlInsertregistration=null;
+		
+		try{
+			sqlInsertregistration="insert into grantees (fullnames, year, issue, program, amount, 0)" +"values(?, ?, ?, ?, ?, ?, ?";
+                        
+			psInsert=conn.prepareStatement(sqlInsertregistration);
+			psInsert.setString(1,sFullName);
+			psInsert.setString(2,sYear);
+			psInsert.setString(3,iIssue);
+			psInsert.setString(4,iProgram);
+			psInsert.setString(5,amount);
+			
+			
+			psInsert.executeUpdate();
+		}
+		catch(Exception e)
+		{
+		   e.printStackTrace();
+		   request.setAttribute("error","<span class='sSError'>&nbsp; Registration is not successful, May be User ID already Exists &nbsp; </span>");
+		   RequestDispatcher dispatch = request.getRequestDispatcher("/add-new-html");
+		   dispatch.forward(request, response);
+		}
 
-        Connection conn = null;
-        String host="localhost";
-        String port="3306";
-        String dbname="grants";
-        
-        
+
+
+	try{
+		 if(psInsert!=null){
+			 psInsert.close();
+		 }
+		 		 
+		 if(conn!=null){
+		  conn.close();
+		 }
+	}
+	catch(Exception e)
+	{
+		e.printStackTrace();
+	}
+     
         
     }
 
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+   
 }
