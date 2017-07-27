@@ -1,3 +1,15 @@
+<%-- 
+    Document   : index
+    Created on : Jul 27, 2017, 10:19:22 AM
+    Author     : kimaiga
+--%>
+
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.Connection"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -36,6 +48,15 @@ and open the template in the editor.
             <!--data table-->
             <div class="row">
                 <div class="large-8 large-centered columns">
+                    <%
+                        Connection connection = null;
+                        Class.forName("com.mysql.jdbc.Driver");
+                        connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/grantsdb", "root", "303seminarian");
+                        Statement statement = connection.createStatement();
+                        ResultSet resultset = statement.executeQuery("select * from grantees");
+                        while (resultset.next()) {
+
+                    %>
                     <table class="hover" id="myTable">
                         <thead>
                             <tr>
@@ -48,25 +69,19 @@ and open the template in the editor.
                         </thead>
                         <tbody>
                             <tr>
-                                <td>Nelson Kimaiga</td>
-                                <td>2015</td>
-                                <td>Malaria</td>
-                                <td>Deltas Africa</td>
-                                <td>$ 4,500,000</td>
-                            </tr>
-                            <tr>
-                                <td>Conor Wickham</td>
-                                <td>2017</td>
-                                <td>Tuberculosis</td>
-                                <td>Grand Challenges Africa</td>
-                                <td>$ 30,000</td>
+                                <td><%= resultset.getString(1)%></td>
+                                <td><%= resultset.getString(2)%></td>
+                                <td><%= resultset.getString(3)%></td>
+                                <td><%= resultset.getString(4)%></td>
+                                <td>$ <%= resultset.getString(5)%></td>
                             </tr>
                         </tbody>
                     </table>
+                    <%}
+                    %>
                 </div>
-            </div>
-        </div>
-        
+            </div>        </div>
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.1/js/foundation.min.js"></script>
     </body>
 </html>
