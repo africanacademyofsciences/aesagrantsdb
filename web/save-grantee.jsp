@@ -15,7 +15,7 @@
     String sFullName = request.getParameter("grantee-name");
     String sYear = request.getParameter("year");
     String iIssue = request.getParameter("issue");
-    String iProgram = request.getParameter("programme");
+    String iProgram = request.getParameter("program");
     String amount = request.getParameter("amount");
 
     //form validation
@@ -37,7 +37,7 @@
             request.setAttribute("grantee-name", sFullName);
             request.setAttribute("year", sYear);
             request.setAttribute("issue", iIssue);
-            request.setAttribute("programme", iProgram);
+            request.setAttribute("program", iProgram);
             request.setAttribute("amount", amount);
 
             //forward data to next jsp page

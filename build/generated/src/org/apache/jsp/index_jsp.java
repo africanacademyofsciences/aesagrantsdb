@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.sql.Statement;
 import java.sql.DriverManager;
 import java.sql.Connection;
+import java.sql.*;
+import backend.DbConn;;
 
 public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
     implements org.apache.jasper.runtime.JspSourceDependent {
@@ -100,9 +102,8 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
                         Statement statement = connection.createStatement();
                         ResultSet resultset = statement.executeQuery("select * from grantees");
                         while (resultset.next()) {
-
-                    
       out.write("\n");
+      out.write("                                             \n");
       out.write("                    <table class=\"hover\" id=\"myTable\">\n");
       out.write("                        <thead>\n");
       out.write("                            <tr>\n");
@@ -113,29 +114,34 @@ public final class index_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("                                <th>Amount</th>\n");
       out.write("                            </tr>\n");
       out.write("                        </thead>\n");
+      out.write("\n");
       out.write("                        <tbody>\n");
       out.write("                            <tr>\n");
       out.write("                                <td>");
-      out.print( resultset.getString(1));
+      out.print( resultset.getString("grantee-name"));
       out.write("</td>\n");
       out.write("                                <td>");
-      out.print( resultset.getString(2));
+      out.print( resultset.getString(2) );
       out.write("</td>\n");
       out.write("                                <td>");
-      out.print( resultset.getString(3));
+      out.print( resultset.getString(3) );
       out.write("</td>\n");
       out.write("                                <td>");
-      out.print( resultset.getString(4));
+      out.print( resultset.getString(4) );
       out.write("</td>\n");
       out.write("                                <td>$ ");
-      out.print( resultset.getString(4));
+      out.print( resultset.getString(5) );
       out.write("</td>\n");
       out.write("                            </tr>\n");
+      out.write("\n");
       out.write("                        </tbody>\n");
+      out.write("\n");
       out.write("                    </table>\n");
-      out.write("                    ");
-}
-                    
+      out.write("                        }\n");
+      out.write("                    %>\n");
+      out.write("                                        \n");
+      out.write("\n");
+      out.write("                    <!--                    <a href=\"add-new.jsp\" target=\"_blank\" class=\"button success\" >Add a new grantee entry</a>-->\n");
       out.write("\n");
       out.write("                </div>\n");
       out.write("            </div>        </div>\n");

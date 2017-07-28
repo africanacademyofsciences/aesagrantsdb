@@ -9,7 +9,7 @@
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.DriverManager"%>
 <%@page import="java.sql.Connection"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" import="java.sql.*, backend.DbConn;"%>
 <!DOCTYPE html>
 <!--
 To change this license header, choose License Headers in Project Properties.
@@ -54,9 +54,8 @@ and open the template in the editor.
                         connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/grantsdb", "root", "303seminarian");
                         Statement statement = connection.createStatement();
                         ResultSet resultset = statement.executeQuery("select * from grantees");
-                        while (resultset.next()) {
-
-                    %>
+                        while (resultset.next()) {%>
+                                             
                     <table class="hover" id="myTable">
                         <thead>
                             <tr>
@@ -67,18 +66,25 @@ and open the template in the editor.
                                 <th>Amount</th>
                             </tr>
                         </thead>
+
                         <tbody>
                             <tr>
-                                <td><%= resultset.getString(1)%></td>
-                                <td><%= resultset.getString(2)%></td>
-                                <td><%= resultset.getString(3)%></td>
-                                <td><%= resultset.getString(4)%></td>
-                                <td>$ <%= resultset.getString(5)%></td>
+                                <td><%= resultset.getString("grantee-name")%></td>
+                                <td><%= resultset.getString(2) %></td>
+                                <td><%= resultset.getString(3) %></td>
+                                <td><%= resultset.getString(4) %></td>
+                                <td>$ <%= resultset.getString(5) %></td>
                             </tr>
+
                         </tbody>
+
                     </table>
-                    <%}
+                        }
                     %>
+                                        
+
+                    <!--                    <a href="add-new.jsp" target="_blank" class="button success" >Add a new grantee entry</a>-->
+
                 </div>
             </div>        </div>
 
